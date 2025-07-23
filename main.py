@@ -1,121 +1,70 @@
 import os
 import json
-import fitz  # PyMuPDF
-from collections import Counter, defaultdict
-import re
+import fitz
+from sentence_transformers import SentenceTransformer
+from joblib import load
 
 INPUT_DIR = "input"
 OUTPUT_DIR = "output"
+SVM_MODEL_PATH = "svm_headings.joblib"
 
-def cluster_font_sizes(sizes, threshold=0.5):
-    sizes = sorted(list(set(sizes)), reverse=True)
-    clusters = []
-    for size in sizes:
-        placed = False
-        for cluster in clusters:
-            if abs(cluster[0] - size) <= threshold:
-                cluster.append(size)
-                placed = True
-                break
-        if not placed:
-            clusters.append([size])
-    return [sum(cluster)/len(cluster) for cluster in clusters]
-
-def extract_outline(pdf_path):
+def extract_lines(pdf_path):
     doc = fitz.open(pdf_path)
     lines = []
-    font_sizes = []
-
     for page_num, page in enumerate(doc):
         blocks = page.get_text("dict")["blocks"]
         for block in blocks:
             if "lines" not in block:
                 continue
             for line in block["lines"]:
-                line_text = ""
-                line_sizes = []
-                line_flags = []
-                line_fonts = []
-                line_xs = []
                 spans = []
                 for span in line["spans"]:
                     text = span["text"].strip()
                     if not text or len(text) < 2:
                         continue
-                    size = span["size"]
-                    font = span["font"]
-                    flags = span["flags"]
-                    font_sizes.append(size)
-                    spans.append((span["bbox"][0], text, size, font, flags))
+                    spans.append((span["bbox"][0], text))
                 if spans:
-                    # Sort spans by x coordinate (left to right)
                     spans.sort()
                     line_text = " ".join([t[1] for t in spans])
-                    line_sizes = [t[2] for t in spans]
-                    line_fonts = [t[3] for t in spans]
-                    line_flags = [t[4] for t in spans]
                     lines.append({
                         "text": line_text,
-                        "sizes": line_sizes,
-                        "fonts": line_fonts,
-                        "flags": line_flags,
-                        "max_size": max(line_sizes),
-                        "any_bold": any(f & 2 for f in line_flags),
-                        "page": page_num
+                        "page": page_num  # 0-based
                     })
+    return lines
 
-    # Cluster font sizes
-    clustered_sizes = cluster_font_sizes(font_sizes)
-    size_counts = Counter([round(s, 1) for s in font_sizes])
-    body_size = size_counts.most_common(1)[0][0]
-    heading_sizes = [s for s in clustered_sizes if s > body_size + 0.1]
-    h_sizes = heading_sizes[:3]
-    h_levels = {}
-    for i, h in enumerate(h_sizes):
-        h_levels[round(h, 1)] = f"H{i+1}"
+def classify_lines(lines, model, clf, le):
+    texts = [l["text"] for l in lines]
+    embeddings = model.encode(texts, show_progress_bar=False)
+    preds = clf.predict(embeddings)
+    labels = le.inverse_transform(preds)
+    for i, l in enumerate(lines):
+        l["label"] = labels[i]
+    return lines
 
-    # Title: largest text on first page, not a header/footer, not too short
+def build_outline(lines):
     title = ""
-    first_page_lines = [l for l in lines if l["page"] == 1]
-    if first_page_lines:
-        candidates = [l for l in first_page_lines if len(l["text"]) > 5 and not l["text"].isupper()]
-        if candidates:
-            title_line = max(candidates, key=lambda l: l["max_size"])
-            title = title_line["text"]
-
     outline = []
     for l in lines:
-        size_rounded = round(l["max_size"], 1)
-        is_heading = False
-        level = None
-        if size_rounded in h_levels:
-            is_heading = True
-            level = h_levels[size_rounded]
-        elif l["any_bold"] and l["max_size"] > body_size:
-            is_heading = True
-            level = "H3"
-        elif re.match(r"^\d+(\.\d+)*\s", l["text"]):
-            if l["max_size"] > body_size:
-                is_heading = True
-                level = "H3"
-        if is_heading and level:
+        if l["label"] == "Title" and not title:
+            title = l["text"]
+        elif l["label"] in {"H1", "H2", "H3"}:
             outline.append({
-                "level": level,
+                "level": l["label"],
                 "text": l["text"],
                 "page": l["page"]
             })
-
-    return {
-        "title": title,
-        "outline": outline
-    }
+    return {"title": title, "outline": outline}
 
 def main():
     os.makedirs(OUTPUT_DIR, exist_ok=True)
+    model = SentenceTransformer('all-MiniLM-L6-v2')
+    clf, le = load(SVM_MODEL_PATH)
     for filename in os.listdir(INPUT_DIR):
         if filename.lower().endswith(".pdf"):
             pdf_path = os.path.join(INPUT_DIR, filename)
-            result = extract_outline(pdf_path)
+            lines = extract_lines(pdf_path)
+            lines = classify_lines(lines, model, clf, le)
+            result = build_outline(lines)
             output_path = os.path.join(OUTPUT_DIR, filename.replace(".pdf", ".json"))
             with open(output_path, "w", encoding="utf-8") as f:
                 json.dump(result, f, ensure_ascii=False, indent=2)
