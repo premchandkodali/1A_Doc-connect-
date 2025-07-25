@@ -1,25 +1,4 @@
 {
   "title": "Application form for grant of LTC advance",
-  "outline": [
-    {
-      "level": "H3",
-      "text": "Designation",
-      "page": 0
-    },
-    {
-      "level": "H3",
-      "text": "rail",
-      "page": 0
-    },
-    {
-      "level": "H3",
-      "text": "Relationship",
-      "page": 0
-    },
-    {
-      "level": "H3",
-      "text": "12. Amount of advance required.",
-      "page": 0
-    }
-  ]
+  "outline": []
 }

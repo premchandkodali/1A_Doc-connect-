@@ -3,32 +3,22 @@
   "outline": [
     {
       "level": "H1",
+      "text": "Mission Statement:    To provide PTHSD high school students with the opportunity to",
+      "page": 0
+    },
+    {
+      "level": "H3",
       "text": "PATHWAY OPTIONS",
       "page": 0
     },
     {
-      "level": "H1",
+      "level": "H2",
       "text": "REGULAR PATHWAY",
       "page": 0
     },
     {
       "level": "H2",
-      "text": "Maintain an overall 2.85 GPA",
-      "page": 0
-    },
-    {
-      "level": "H1",
       "text": "DISTINCTION PATHWAY",
-      "page": 0
-    },
-    {
-      "level": "H2",
-      "text": "Maintain an overall 3.5 GPA",
-      "page": 0
-    },
-    {
-      "level": "H3",
-      "text": "setting, and self-direction.",
       "page": 0
     }
   ]

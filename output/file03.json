@@ -1,8 +1,8 @@
 {
-  "title": "",
+  "title": "RFP: R RFP: R RFP: R RFP: Request f quest f quest f quest for Pr r Pr r Pr r Proposal oposal oposal oposal",
   "outline": [
     {
-      "level": "H1",
+      "level": "H3",
       "text": "Ontario’s Libraries",
       "page": 0
     },
@@ -12,8 +12,13 @@
       "page": 0
     },
     {
-      "level": "H2",
+      "level": "H1",
       "text": "To Present a Proposal for Developing",
+      "page": 0
+    },
+    {
+      "level": "H1",
+      "text": "the Business Plan for the Ontario",
       "page": 0
     },
     {
@@ -22,374 +27,24 @@
       "page": 0
     },
     {
-      "level": "H1",
+      "level": "H2",
+      "text": "March 21, 2003",
+      "page": 0
+    },
+    {
+      "level": "H2",
       "text": "Ontario’s Digital Library",
       "page": 1
     },
     {
-      "level": "H2",
-      "text": "Summary",
+      "level": "H3",
+      "text": "A Critical Component for Implementing Ontario’s Road Map to",
       "page": 1
     },
     {
       "level": "H3",
-      "text": "how the ODL will be implemented, including the timeline",
+      "text": "Prosperity Strategy",
       "page": 1
-    },
-    {
-      "level": "H3",
-      "text": "how the ODL will operate and be managed following the implementation",
-      "page": 1
-    },
-    {
-      "level": "H3",
-      "text": "implementation and operational stages",
-      "page": 1
-    },
-    {
-      "level": "H3",
-      "text": "Timeline:",
-      "page": 1
-    },
-    {
-      "level": "H2",
-      "text": "Background",
-      "page": 2
-    },
-    {
-      "level": "H3",
-      "text": "leading edge for Ontario but several jurisdictions have forged the path with collaborative",
-      "page": 2
-    },
-    {
-      "level": "H1",
-      "text": "digital libraries. We can learn from their experiences. For example, The Alberta Library (TAL)",
-      "page": 2
-    },
-    {
-      "level": "H3",
-      "text": "years. TAL’s implementation plan was supported by 8 million dollars in provincially shared",
-      "page": 3
-    },
-    {
-      "level": "H3",
-      "text": "learn from TAL’s practices, the scope of planning and implementing ODL is much larger than",
-      "page": 3
-    },
-    {
-      "level": "H3",
-      "text": "The principles which will define and guide the ODL are:",
-      "page": 3
-    },
-    {
-      "level": "H3",
-      "text": "Equitable access for all Ontarians:",
-      "page": 3
-    },
-    {
-      "level": "H3",
-      "text": "Shared decision-making and accountability:",
-      "page": 3
-    },
-    {
-      "level": "H3",
-      "text": "Shared governance structure:",
-      "page": 3
-    },
-    {
-      "level": "H3",
-      "text": "Shared funding:",
-      "page": 3
-    },
-    {
-      "level": "H3",
-      "text": "Local points of entry:",
-      "page": 4
-    },
-    {
-      "level": "H3",
-      "text": "Services envisioned for the ODL’s include:",
-      "page": 4
-    },
-    {
-      "level": "H3",
-      "text": "Access:",
-      "page": 4
-    },
-    {
-      "level": "H1",
-      "text": "to local digital collections",
-      "page": 4
-    },
-    {
-      "level": "H3",
-      "text": "Guidance and Advice:",
-      "page": 4
-    },
-    {
-      "level": "H3",
-      "text": "Training:",
-      "page": 4
-    },
-    {
-      "level": "H3",
-      "text": "Provincial Purchasing & Licensing:",
-      "page": 4
-    },
-    {
-      "level": "H3",
-      "text": "Technological Support:",
-      "page": 4
-    },
-    {
-      "level": "H1",
-      "text": "of common standards for the preservation and archiving local digital content",
-      "page": 4
-    },
-    {
-      "level": "H3",
-      "text": "What could the ODL really mean?",
-      "page": 4
-    },
-    {
-      "level": "H3",
-      "text": "The opportunity to gain from the provincial, collaborative partnership in order",
-      "page": 5
-    },
-    {
-      "level": "H3",
-      "text": "Improved access and flexibility for all students at all ages and stages",
-      "page": 5
-    },
-    {
-      "level": "H3",
-      "text": "envision a governance model similar to that prepared for the province’s ORION network.",
-      "page": 5
-    },
-    {
-      "level": "H2",
-      "text": "The Business Plan to be Developed",
-      "page": 5
-    },
-    {
-      "level": "H3",
-      "text": "how the ODL will be implemented, including the timeline",
-      "page": 5
-    },
-    {
-      "level": "H3",
-      "text": "how the ODL will operate and be managed following the implementation",
-      "page": 5
-    },
-    {
-      "level": "H3",
-      "text": "implementation and operational stages",
-      "page": 5
-    },
-    {
-      "level": "H3",
-      "text": "Milestones",
-      "page": 6
-    },
-    {
-      "level": "H2",
-      "text": "Approach and Specific Proposal Requirements",
-      "page": 6
-    },
-    {
-      "level": "H1",
-      "text": "d) references with details of work completed for these references",
-      "page": 6
-    },
-    {
-      "level": "H2",
-      "text": "e) description of the approach that will be used for completing the business plan,",
-      "page": 6
-    },
-    {
-      "level": "H2",
-      "text": "Evaluation and Awarding of Contract",
-      "page": 7
-    },
-    {
-      "level": "H2",
-      "text": "Quality of the proposal /approach outlined for undertaking the business planning process",
-      "page": 7
-    },
-    {
-      "level": "H3",
-      "text": "Appendix A:  ODL Envisioned Phases & Funding",
-      "page": 8
-    },
-    {
-      "level": "H3",
-      "text": "Timeline: March 2003 – September 2003",
-      "page": 8
-    },
-    {
-      "level": "H3",
-      "text": "Phase II: Implementing and Transitioning",
-      "page": 8
-    },
-    {
-      "level": "H3",
-      "text": "Funding Requested: Funding from other states and provinces suggest that the ODL could receive",
-      "page": 8
-    },
-    {
-      "level": "H3",
-      "text": "Phase III: Operating and Growing the ODL",
-      "page": 8
-    },
-    {
-      "level": "H3",
-      "text": "Timeline: January 2007 -",
-      "page": 8
-    },
-    {
-      "level": "H3",
-      "text": "In the third phase the ODL moves into the operational stage. Ontarians will experience the full benefits",
-      "page": 8
-    },
-    {
-      "level": "H3",
-      "text": "during the same period",
-      "page": 9
-    },
-    {
-      "level": "H3",
-      "text": "of the ODL and help to offset operating costs.",
-      "page": 9
-    },
-    {
-      "level": "H3",
-      "text": "ODL Steering Committee Terms of Reference",
-      "page": 10
-    },
-    {
-      "level": "H3",
-      "text": "1. Preamble",
-      "page": 10
-    },
-    {
-      "level": "H3",
-      "text": "2. Terms of Reference",
-      "page": 10
-    },
-    {
-      "level": "H3",
-      "text": "responsibilities include:",
-      "page": 10
-    },
-    {
-      "level": "H2",
-      "text": "2.1 developing a detailed business plan for the three-year implementation phase of the ODL, including",
-      "page": 10
-    },
-    {
-      "level": "H3",
-      "text": "staffing, and evaluation;",
-      "page": 10
-    },
-    {
-      "level": "H2",
-      "text": "2.3 recruiting and managing the business planner(s);",
-      "page": 10
-    },
-    {
-      "level": "H2",
-      "text": "2.5 serving as a focus group for business planner(s) to test ideas;",
-      "page": 10
-    },
-    {
-      "level": "H2",
-      "text": "2.6 providing signoff for business planner(s) at key decision points of business plan development;",
-      "page": 10
-    },
-    {
-      "level": "H2",
-      "text": "of the business plan;",
-      "page": 10
-    },
-    {
-      "level": "H2",
-      "text": "2.8 presenting the business plan to funders",
-      "page": 10
-    },
-    {
-      "level": "H3",
-      "text": "3. Membership",
-      "page": 10
-    },
-    {
-      "level": "H3",
-      "text": "4. Appointment Criteria and Process",
-      "page": 11
-    },
-    {
-      "level": "H2",
-      "text": "4.1",
-      "page": 11
-    },
-    {
-      "level": "H2",
-      "text": "4.2",
-      "page": 11
-    },
-    {
-      "level": "H3",
-      "text": "5. Term",
-      "page": 11
-    },
-    {
-      "level": "H2",
-      "text": "business plan plus two months. This process is expected to take approximately 6 months.",
-      "page": 11
-    },
-    {
-      "level": "H3",
-      "text": "6. Chair",
-      "page": 11
-    },
-    {
-      "level": "H3",
-      "text": "Role of the Chair:",
-      "page": 11
-    },
-    {
-      "level": "H3",
-      "text": "7. Meetings",
-      "page": 11
-    },
-    {
-      "level": "H3",
-      "text": "8. Lines of Accountability and Communication",
-      "page": 11
-    },
-    {
-      "level": "H3",
-      "text": "government reporting regulations for funds received.",
-      "page": 11
-    },
-    {
-      "level": "H3",
-      "text": "9. Financial and Administrative Policies",
-      "page": 12
-    },
-    {
-      "level": "H3",
-      "text": "statement and procedural guidelines that will govern its work.",
-      "page": 12
-    },
-    {
-      "level": "H1",
-      "text": "1. Reference Resources",
-      "page": 13
-    },
-    {
-      "level": "H1",
-      "text": "- virtual reference services",
-      "page": 13
     }
   ]
 }
