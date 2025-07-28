@@ -42,44 +42,38 @@ def assign_heading_levels(lines):
     # Count font size frequencies
     font_size_counts = Counter(line['font_size'] for line in lines)
     total_lines = len(lines)
-    # Most common font size is body text
     body_font_size, _ = font_size_counts.most_common(1)[0]
-    # Only consider font sizes that are rare (<20% of lines)
     rare_font_sizes = [size for size, count in font_size_counts.items() if count / total_lines < 0.2]
-    # Sort rare font sizes descending (largest = Title, then H1, ...)
     rare_font_sizes = sorted(rare_font_sizes, reverse=True)
-    # Map rare font sizes to heading levels
     size_to_level = {}
     for i, size in enumerate(rare_font_sizes[:len(HEADING_LEVELS)]):
         size_to_level[size] = HEADING_LEVELS[i]
-    # Assign level to each line
     outline = []
     title_lines = []
     for line in lines:
-        # Ignore body text font size
         if line['font_size'] == body_font_size:
             continue
         level = size_to_level.get(line['font_size'])
         if not level:
-            continue  # Not a heading
-        # Ignore lines that are just numbers or very short (<=3 chars, e.g., '1.', '2.')
+            continue
         text = line['text'].strip()
         if len(text) <= 3 or text.replace('.', '').isdigit():
             continue
-        # Optionally: ignore lines that match common form/table patterns (e.g., 'S.No', 'Name', 'Age', 'Date')
         skip_patterns = {'s.no', 'name', 'age', 'date', 'rs.', 'signature'}
         if text.lower() in skip_patterns:
             continue
-        if level == 'Title':
+        # Only consider title from first page
+        if level == 'Title' and line['page'] == 0 or line['page'] == 1 :
             title_lines.append(text)
-        else:
+        elif level != 'Title':
             entry = {
                 'level': level,
                 'text': text,
                 'page': line['page']
             }
             outline.append(entry)
-    title = ' '.join(title_lines) if title_lines else None
+    # Title only from first page, else empty string
+    title = ' '.join(title_lines) if title_lines else ""
     return title, outline
 
 
@@ -106,4 +100,4 @@ def main():
         print(f"  -> Saved outline to {out_file}")
 
 if __name__ == '__main__':
-    main() 
+    main()
