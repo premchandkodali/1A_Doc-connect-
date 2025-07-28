@@ -1,0 +1,3 @@
+
+# External requirements for Doc-connect
+PyMuPDF
