@@ -1,174 +1,217 @@
-PDF Outline Extractor
-A high-performance, offline-capable solution for extracting structured outlines from PDF documents. This tool identifies titles and headings (H1, H2, H3) along with their page numbers, outputting results in JSON format.
-Problem Statement
+# Document Structure Extraction - Round 1A
+
+A high-performance, offline-capable system for extracting structured outlines from PDF documents. This solution analyzes document layout and typography to identify titles and hierarchical headings (H1, H2, H3) with precise page number mapping, outputting results in standardized JSON format.
+
+## 🎯 Problem Statement
+
 Extract structured outlines from PDF documents including:
+- Document title identification
+- Hierarchical heading detection (H1, H2, H3)
+- Accurate page number mapping
+- JSON format output
+- Sub-10 second execution on 50-page PDFs
+- Offline operation in containerized environment
 
-Document title
-Hierarchical headings (H1, H2, H3)
-Corresponding page numbers
-JSON formatted output
+## 🏗️ System Architecture
 
-Constraints:
+### Core Processing Pipeline
 
-Execution time: < 10 seconds for 50-page PDFs
-Offline operation (no internet access)
-AMD64 CPU compatibility
-Docker containerized deployment
+1. **Document Analysis Engine**
+   - PyMuPDF-based PDF parsing with layout preservation
+   - Font property analysis (size, weight, style)
+   - Statistical text classification
 
-Approach
-Our solution implements a rule-based system using font analysis and layout detection to identify document structure. The approach focuses on:
-Core Strategy
+2. **Title Extraction Module**
+   - Largest font size detection on first two pages
+   - Rare font pattern identification
+   - Content filtering for accuracy
 
-Title Detection: Identifies the largest/rarest font on the first two pages
-Heading Classification: Uses statistical font analysis to categorize H1, H2, H3 levels
-Layout Analysis: Considers font size, boldness, and vertical positioning
-Content Filtering: Excludes form fields, page numbers, and non-content text
+3. **Heading Classification System**
+   - Multi-level hierarchy detection (H1, H2, H3)
+   - Relative font size analysis
+   - Bold text emphasis recognition
 
-Key Heuristics
+4. **Output Generation**
+   - Structured JSON formatting
+   - Unicode text support
+   - Page number indexing (zero-based)
 
-Body Text Identification: Most common font size serves as baseline
-Heading Detection: Rare font sizes (< 20% of total lines) indicate headings
-Emphasis Recognition: Bold fonts suggest heading importance
-Content Validation: Filters out numbers, short text, and form elements
-Multi-language Support: Handles Unicode content including non-English text
+## 🧠 Intelligence Heuristics
 
-Processing Pipeline
+### Font Analysis Strategy
+- **Body Text Identification**: Most common font size across document
+- **Heading Detection**: Font sizes appearing in <20% of total lines
+- **Title Recognition**: Largest/rarest fonts on opening pages
+- **Emphasis Detection**: Bold formatting indicates structural importance
 
-Font Analysis: Statistical analysis of all text blocks
-Hierarchy Detection: Relative font size comparison for heading levels
-Structure Mapping: Builds hierarchical outline with page references
-JSON Generation: Outputs structured data in standardized format
+### Content Filtering Rules
+- Excludes form fields and input elements
+- Removes standalone numbers and page references
+- Filters short text fragments (<threshold characters)
+- Ignores repetitive footer/header content
 
-Technologies & Libraries
-Programming Language
+### Statistical Classification
+- Font size frequency analysis for body text baseline
+- Relative size thresholds for heading hierarchy
+- Position-based importance weighting
+- Multi-language text handling
 
-Python 3.10: Core development platform
+## 🛠️ Technologies & Libraries
 
-Key Libraries
+| Component | Technology | Version | Purpose |
+|-----------|------------|---------|---------|
+| Runtime | Python | 3.10 | Core processing environment |
+| PDF Engine | PyMuPDF | Latest | Document parsing and analysis |
+| Data Handling | json | Built-in | Output formatting |
+| File Operations | os | Built-in | Directory and file management |
+| Statistics | collections | Built-in | Font frequency analysis |
+| Container | Docker | Latest | Isolated execution environment |
 
-PyMuPDF (fitz): PDF parsing and text extraction
-collections: Statistical analysis and data structures
-json: Output formatting
-os: File system operations
+## 🚀 Quick Start
 
-Containerization
+### Prerequisites
+- Docker installed and running
+- AMD64/x86_64 architecture
+- Input PDF files ready
 
-Docker: Based on python:3.10-slim image
-Platform: linux/amd64 architecture support
+### Build Container
+```bash
+docker build --platform linux/amd64 -t dotconnector:v1 .
+```
 
-Installation & Setup
-Prerequisites
+### Prepare Directory Structure
+```
+project-root/
+├── input/           # Place PDF files here
+│   ├── document1.pdf
+│   ├── document2.pdf
+│   └── ...
+├── output/          # JSON outputs generated here
+├── main.py          # Core processing script
+├── Dockerfile       # Container configuration
+└── README.md        # This documentation
+```
 
-Docker installed on your system
-Input PDF files in designated folder
-Output directory for JSON results
-
-Docker Build
-bashdocker build --platform linux/amd64 -t dotconnector:v1 .
-Directory Structure
-project/
-├── Dockerfile
-├── main.py
-├── requirements.txt
-├── input/          # Place your PDF files here
-└── output/         # JSON outputs will be generated here
-Usage
-Docker Execution
-bashdocker run --rm \
+### Execute Processing
+```bash
+docker run --rm \
   -v $(pwd)/input:/app/input \
   -v $(pwd)/output:/app/output \
   --network none \
   dotconnector:v1
-Input Requirements
+```
 
-Place PDF files in the input/ directory
-Files will be processed automatically
-No specific naming convention required
+### Expected Behavior
+- Processes all PDF files in `/app/input`
+- Generates corresponding `.json` files in `/app/output`
+- Maintains original filename with `.json` extension
+- Completes processing within 10 seconds per 50-page document
 
-Expected Execution Flow
+## 📊 Output Format
 
-Container reads all PDF files from /app/input
-Processes each PDF using font analysis algorithms
-Generates corresponding .json files in /app/output
-Completes processing within performance constraints
-
-Output Format
-JSON Schema
-json{
-  "title": "Document Title",
+### JSON Schema Structure
+```json
+{
+  "title": "Document Title Text",
   "outline": [
     {
       "level": "H1",
-      "text": "Main Section Heading",
+      "text": "Heading Text",
+      "page": 0
+    },
+    {
+      "level": "H2", 
+      "text": "Sub-heading Text",
       "page": 1
-    },
-    {
-      "level": "H2",
-      "text": "Subsection Heading",
-      "page": 2
-    },
-    {
-      "level": "H3",
-      "text": "Sub-subsection Heading",
-      "page": 2
     }
   ]
 }
-Output Characteristics
+```
 
-Title: Extracted from first two pages using largest/rarest fonts
-Outline: Array of heading objects with hierarchical structure
-Levels: Title, H1, H2, H3 based on font size hierarchy
-Page Numbers: Zero-indexed page references
-Unicode Support: Handles multi-language text properly
+### Output Characteristics
+- **Title Field**: Document title from first two pages
+- **Outline Array**: Ordered list of headings
+- **Level Classification**: Title, H1, H2, H3 hierarchy
+- **Page Numbers**: Zero-indexed page references
+- **Text Content**: Clean, filtered heading text
+- **Unicode Support**: Multi-language compatibility
 
-Performance Features
-Optimization Strategies
+## ⚡ Performance Specifications
 
-Memory Efficiency: Page-by-page processing to minimize RAM usage
-Fast Execution: Statistical font analysis reduces processing time
-Error Resilience: Continues operation even with problematic files
-Batch Processing: Handles multiple PDFs in single execution
+### Execution Constraints
+| Metric | Specification |
+|--------|---------------|
+| Processing Time | <10 seconds (50-page PDF) |
+| Platform Support | AMD64/x86_64 CPU |
+| Internet Dependency | None (offline operation) |
+| Memory Usage | Optimized page-by-page processing |
+| Container Size | Minimal footprint |
 
-Constraint Compliance
+### Scalability Features
+- **Batch Processing**: Handles multiple PDFs simultaneously
+- **Memory Efficiency**: Page-by-page analysis prevents overflow
+- **Error Resilience**: Continues processing despite individual file issues
+- **Resource Optimization**: Minimal CPU and memory footprint
 
-✅ Speed: < 10 seconds execution time
-✅ Offline: No internet connectivity required
-✅ Platform: AMD64 CPU compatibility
-✅ Containerized: Full Docker support with network isolation
+## 🔧 Advanced Capabilities
 
-Multi-language Support
-Supported Features
+### Multi-Language Support
+- Unicode text extraction and preservation
+- Non-English content handling (Hindi, Arabic, etc.)
+- Character encoding normalization
+- Font analysis across different writing systems
 
-Unicode Text: Handles various character encodings
-Non-English Content: Processes Hindi, Arabic, Chinese, etc.
-Mixed Languages: Documents with multiple language sections
-Special Characters: Mathematical symbols, accented characters
+### Document Type Adaptability
+- Academic papers and research documents
+- Business reports and presentations
+- Educational materials and textbooks
+- Form-based documents with mixed content
+- Technical manuals and specifications
 
-Document Type Compatibility
-Supported Formats
+### Robust Content Analysis
+- Statistical font size distribution analysis
+- Context-aware heading detection
+- Structural pattern recognition
+- Adaptive threshold calculation
 
-Academic Papers: Research documents with standard formatting
-Technical Reports: Engineering and scientific documentation
-Educational Materials: Textbooks, course materials, presentations
-Form Documents: Structured forms with heading hierarchies
-Mixed Content: Documents with varied formatting styles
+## 🐳 Docker Configuration
 
-Troubleshooting
-Common Issues
+### Container Specifications
+```dockerfile
+FROM python:3.10-slim
+WORKDIR /app
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+COPY main.py .
+CMD ["python", "main.py"]
+```
 
-Font Detection: Varies by document formatting standards
-Heading Recognition: Depends on consistent font usage
-Multi-column Layouts: May affect heading sequence
-Scanned PDFs: Text-based PDFs work best
+### Volume Mapping
+- Input: `$(pwd)/input:/app/input`
+- Output: `$(pwd)/output:/app/output`
+- Network: `--network none` (offline operation)
 
-Performance Tips
+## 🔍 Troubleshooting
 
-Ensure PDFs contain selectable text (not just images)
-Documents with consistent formatting yield better results
-Complex layouts may require manual verification
+### Common Issues
+- **No Output Generated**: Verify PDF files in input directory
+- **Slow Processing**: Check document size and complexity
+- **Encoding Errors**: Ensure UTF-8 compatible file names
+- **Container Issues**: Verify Docker platform compatibility
 
-Repository
-GitHub: https://github.com/premchandkodali/1A_Doc-connect-
-License
-This project is developed for the DotConnector challenge and follows the specified technical requirements and constraints.
+### Debug Information
+- Processing logs available in container output
+- Error messages indicate specific file issues
+- Performance metrics displayed during execution
+
+## 📁 Project Structure
+```
+1A_Doc-connect/
+├── main.py              # Core extraction logic
+├── Dockerfile           # Container configuration
+├── requirements.txt     # Python dependencies
+├── README.md           # This documentation
+├── approach_explanation.md # Methodology details
+├── input/              # PDF input directory
+└── output/             # JSON output directory
+```
